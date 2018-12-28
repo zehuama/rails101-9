@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+
   def index
     @groups = Group.all
   end
@@ -18,7 +20,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
-    @posts = @group.posts 
+    @posts = @group.posts
   end
 
   def edit
