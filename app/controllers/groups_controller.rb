@@ -20,6 +20,19 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
   end
 
+  def edit
+    @group = Group.find(params[:id])
+  end
+
+  def update
+    @group = Group.find(params[:id])
+    if @group.update(group_params)
+      redirect_to groups_path, notice: "修改讨论版成功！"
+    else
+      render :edit
+    end
+  end
+
   private
 
   def group_params
