@@ -9,6 +9,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.group = @group
+    @post.user = current_user
     if @post.save
       redirect_to group_path(@group), notice: "新增文章成功！"
     else
@@ -18,10 +19,16 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
+    if current_user != @post.user
+      redirect_to group_path(@group), alert: "You have no permission."
+    end
   end
 
   def update
     @post = Post.find(params[:id])
+    if current_user != @post.user
+      redirect_to group_path(@group), alert: "You have no permission."
+    end
     if @post.update(post_params)
       redirect_to group_path(@group), notice: "文章已更新！"
     else
@@ -31,6 +38,9 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
+    if current_user != @post.user
+      redirect_to group_path(@group), alert: "You have no permission."
+    end
     @post.destroy
     redirect_to group_path(@group), alert: "文章已删除。"
   end
