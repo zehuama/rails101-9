@@ -15,10 +15,10 @@
       <% @groups.each do |group| %>
         <tr>
           <td>#</td>
-          <td><%= link_to(group.title, group_path(group)) %></td>
-          <td><%= group.description %></td>
+          <td><%= link_to(truncate(group.title, length: 10), group_path(group)) %></td>
+          <td><%= truncate(group.description, length: 20) %></td>
           <td><%= group.posts.count %></td>
-          <td><%= group.updated_at %></td>
+          <td><%= group.updated_at.to_s(:long) %></td>
           <td>
             <%= link_to("Edit", edit_account_group_path(group), class: "btn btn-info btn-xs") %>
             <%= link_to("Delete", account_group_path(group), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-xs") %>
